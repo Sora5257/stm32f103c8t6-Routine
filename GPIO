@@ -1,0 +1,30 @@
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); //开启时钟
+GPIO_InitTypeDef GPIO_InitStructure;
+GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; //推挽输出
+// 推挽输出下，高低电平均有驱动能力；开漏输出下，高阻态，低电平有驱动能力
+GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2;
+GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+//配置高低电平
+GPIO_ResetBits(GPIOA, GPIO_Pin_0); //配置低电平
+GPIO_SetBits(GPIOA, GPIO_Pin_0); //配置高电平
+GPIO_WriteBit(GPIOA, GPIO_Pin_0, Bit_RESET);
+GPIO_WriteBit(GPIOA, GPIO_Pin_0, (BitAction)0);
+GPIO_WriteBit(GPIOA, GPIO_Pin_0, Bit_SET);
+GPIO_WriteBit(GPIOA, GPIO_Pin_0, (BitAction)1);
+
+//批量配置高低电平，通过按位取反实现低电平
+GPIO_Write(GPIOA, ~0x0001); //0000 0000 0000 0001，即1亮其余不亮
+GPIO_Write(GPIOA, ~0x0002); //0000 0000 0000 0010
+GPIO_Write(GPIOA, ~0x0004); //0000 0000 0000 0100
+GPIO_Write(GPIOA, ~0x0008); //0000 0000 0000 1000
+GPIO_Write(GPIOA, ~0x0010); //0000 0000 0001 0000
+GPIO_Write(GPIOA, ~0x0020); //0000 0000 0010 0000
+GPIO_Write(GPIOA, ~0x0040); //0000 0000 0100 0000
+GPIO_Write(GPIOA, ~0x0080); //0000 0000 1000 0000
+
+//A15、B3与B4为调试端口，不可轻易使用
+
+GPIO_ReadInputData(GPIOA); //输入
+GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0); //输入寄存器
