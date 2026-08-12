@@ -1,4 +1,4 @@
-RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);//中断控制器
 	//EXTI&NVIC时钟持续打开，不需要在这里打开
 	//NVIC为内核外设，内核外设不需要开启时钟
